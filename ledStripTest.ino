@@ -9,22 +9,6 @@ CRGB leds[NUM_LEDS];
 
 #define UPDATES_PER_SECOND 300
 
-// This example shows several ways to set up and use 'palettes' of colors
-// with FastLED.
-//
-// These compact palettes provide an easy way to re-colorize your
-// animation on the fly, quickly, easily, and with low overhead.
-//
-// USING palettes is MUCH simpler in practice than in theory, so first just
-// run this sketch, and watch the pretty lights as you then read through
-// the code.  Although this sketch has eight (or more) different color schemes,
-// the entire sketch compiles down to about 6.5K on AVR.
-//
-// FastLED provides a few pre-configured color palettes, and makes it
-// extremely easy to make up your own color schemes with palettes.
-//
-// Some notes on the more abstract 'theory and practice' of
-// FastLED compact palettes are at the bottom of this file.
 
 
 
@@ -182,30 +166,6 @@ int getStringBetweenDelimiters(const char* string, const char* leftDelimiter, co
 }
 
 
-/*
-//will parse out all characters found from a starting index to a ending character to an int
-int parseIntTillEndChar(const char *input, int startingindex, const char endchar) {
-	//this creates a char pointer which is just a number that references memory
-	const char *p;
-	//p is now pointing to inputs memory address
-	p = input;
-	//we add to the memory address to get to the first index of the string
-	p += startingindex;
-	//creates another string to hold the number
-	char intbuffer[4];
-
-	//stores the index for iterating over string
-	uint8_t index = 0;
-	//checks for null terminator, the specified end character, or if the index got to high
-	while (*p || *p != endchar || index > 2) {
-		intbuffer[index] = *p;
-		index++;
-	}
-	//parses the result to a int and returns it;
-	return atoi(intbuffer);
-}
-*/
-
 uint8_t HextoByte(char& x16, char& x1) {
 	uint8_t decimal = HexLetterToNumber(x1) + 16 * HexLetterToNumber(x16);
 	return decimal;
@@ -341,27 +301,3 @@ const TProgmemPalette16 myRedWhiteBluePalette_p PROGMEM =
 	CRGB::Black,
 	CRGB::Black
 };
-
-
-
-// Additionl notes on FastLED compact palettes:
-//
-// Normally, in computer graphics, the palette (or "color lookup table")
-// has 256 entries, each containing a specific 24-bit RGB color.  You can then
-// index into the color palette using a simple 8-bit (one byte) value.
-// A 256-entry color palette takes up 768 bytes of RAM, which on Arduino
-// is quite possibly "too many" bytes.
-//
-// FastLED does offer traditional 256-element palettes, for setups that
-// can afford the 768-byte cost in RAM.
-//
-// However, FastLED also offers a compact alternative.  FastLED offers
-// palettes that store 16 distinct entries, but can be accessed AS IF
-// they actually have 256 entries; this is accomplished by interpolating
-// between the 16 explicit entries to create fifteen intermediate palette
-// entries between each pair.
-//
-// So for example, if you set the first two explicit entries of a compact 
-// palette to Green (0,255,0) and Blue (0,0,255), and then retrieved 
-// the first sixteen entries from the virtual palette (of 256), you'd get
-// Green, followed by a smooth gradient from green-to-blue, and then Blue.
